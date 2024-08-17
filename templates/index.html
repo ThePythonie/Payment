@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6e2d3; /* Background color */
+            font-family: 'Courier New', monospace; /* Font family */
+            color: #2f2f2f; /* Text color */
+        }
+        .container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fdf6e3; /* Container background color */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            border-bottom: 2px solid #4a4a4a; /* Header border color */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #4a4a4a; /* Header text color */
+            font-weight: bold;
+            font-size: 22px;
+        }
+        .btn-primary {
+            background-color: #3498db; /* Updated button color */
+            border-color: #3498db; /* Updated button border color */
+            font-size: 16px; /* Increased font size */
+            font-weight: 600; /* Bolder font */
+            border-radius: 8px; /* Rounded corners */
+            padding: 10px 20px; /* Increased padding */
+            text-transform: uppercase; /* Uppercase text */
+            margin: 10px; /* Space between buttons */
+            color: #ffffff; /* Button text color */
+            text-decoration: none; /* Remove underline */
+        }
+        .btn-primary:hover {
+            background-color: #2980b9; /* Hover color */
+            border-color: #2980b9; /* Hover border color */
+        }
+        .btn-primary:focus {
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* Focus shadow */
+        }
+        .btn-primary:active {
+            background-color: #2980b9; /* Active color */
+            border-color: #3498db; /* Active border color */
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-center">Welcome to the Employee Management System</h1>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    <a href="{{ url_for('add_employee') }}" class="btn btn-primary">Add Employee</a>
+                    <a href="{{ url_for('remove_employee') }}" class="btn btn-primary">Remove Employee</a>
+                    <a href="{{ url_for('record_payment') }}" class="btn btn-primary">Record Payment</a>
+                    <a href="{{ url_for('view_payments') }}" class="btn btn-primary">View Payments</a>
+                    <a href="{{ url_for('view_employee') }}" class="btn btn-primary">View Employee</a>    </div>
+        </div>
+    </div>
+</body>
+</html>

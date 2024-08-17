@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6e2d3;
+            font-family: 'Courier New', monospace;
+            color: #2f2f2f;
+        }
+        .container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fdf6e3;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #4a4a4a;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+        .btn-primary {
+            background-color: #d35400;
+            border-color: #d35400;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: #e67e22;
+            border-color: #e67e22;
+        }
+        .btn-secondary {
+            background-color: #7f8c8d;
+            border-color: #7f8c8d;
+            border-radius: 4px;
+        }
+        .btn-secondary:hover {
+            background-color: #95a5a6;
+            border-color: #95a5a6;
+        }
+        table {
+            margin-top: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .table thead th {
+            background-color: #4a4a4a;
+            color: white;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            border-color: #bdc3c7;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #ecf0f1;
+        }
+        .alert-info {
+            background-color: #f0e68c;
+            color: #4a4a4a;
+            border-color: #4a4a4a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-center">Employee Details: {{ employee_name }}</h1>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h2 class="text-center">Employee Information</h2>
+                <div class="table-responsive">
+                    {{ employee_info|safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center">Payment Records</h2>
+                
+                <form method="get" action="{{ url_for('employee_page', name=employee_name) }}" id="filter-form">
+                    <div class="form-group">
+                        <label for="filter">Filter By:</label>
+                        <select id="filter" name="filter" class="form-select">
+                            <option value="none" {% if filter_option == 'none' %}selected{% endif %}>None</option>
+                            <option value="last" {% if filter_option == 'last' %}selected{% endif %}>Last Month</option>
+                            <option value="current" {% if filter_option == 'current' %}selected{% endif %}>Current Month</option>
+                            <option value="custom" {% if filter_option == 'custom' %}selected{% endif %}>Custom Date Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="custom-date-range" {% if filter_option != 'custom' %}style="display:none;"{% endif %}>
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                        <label for="end_date" class="mt-2">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                    </div>
+                </form>
+                <div class="alert alert-info mt-4">
+                    <h4>Total Payments: <span class="text-success">Rs{{ total_payments }}</span></h4>
+                </div>
+                
+                <div class="table-responsive">
+                    {{ employee_payments|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('filter').addEventListener('change', function() {
+            var filterOption = this.value;
+            var customDateRange = document.getElementById('custom-date-range');
+            if (filterOption === 'custom') {
+                customDateRange.style.display = 'block';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+            document.getElementById('filter-form').submit();
+        });
+
+        function checkAndSubmitForm() {
+            var startDate = document.getElementById('start_date').value;
+            var endDate = document.getElementById('end_date').value;
+            if (startDate && endDate) {
+                document.getElementById('filter').value = 'custom';
+                document.getElementById('filter-form').submit();
+            }
+        }
+
+        document.getElementById('start_date').addEventListener('change', checkAndSubmitForm);
+        document.getElementById('end_date').addEventListener('change', checkAndSubmitForm);
+    </script>
+</body>
+</html>

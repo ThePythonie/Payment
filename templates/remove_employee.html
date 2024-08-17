@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6e2d3;
+            font-family: 'Courier New', monospace;
+            color: #2f2f2f;
+        }
+        .container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fdf6e3;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #4a4a4a;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+        .btn-primary {
+            background-color: #d35400;
+            border-color: #d35400;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: #e67e22;
+            border-color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-center">Remove Employee</h1>
+        </div>
+        
+        <form method="post" action="{{ url_for('remove_employee') }}">
+            <div class="form-group">
+                <label for="employee_name">Employee Name:</label>
+                <input type="text" id="employee_name" name="employee_name" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">Remove Employee</button>
+        </form>
+    </div>
+</body>
+</html>

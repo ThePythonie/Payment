@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+        table {
+            margin-top: 20px;
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-center">Employee Details: {{ employee_name }}</h1>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h2>Employee Information</h2>
+                <div class="table-responsive">
+                    {{ employee_info|safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Payment Records</h2>
+                
+                <form method="get" action="{{ url_for('employee_page', name=employee_name) }}" id="filter-form">
+                    <div class="form-group">
+                        <label for="filter">Filter By:</label>
+                        <select id="filter" name="filter" class="form-select">
+                            <option value="none" {% if filter_option == 'none' %}selected{% endif %}>None</option>
+                            <option value="last" {% if filter_option == 'last' %}selected{% endif %}>Last Month</option>
+                            <option value="current" {% if filter_option == 'current' %}selected{% endif %}>Current Month</option>
+                            <option value="custom" {% if filter_option == 'custom' %}selected{% endif %}>Custom Date Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="custom-date-range" {% if filter_option != 'custom' %}style="display:none;"{% endif %}>
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                        <label for="end_date" class="mt-2">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                    </div>
+                </form>
+                <div class="alert alert-info mt-4">
+                    <h4>Total Payments: <span class="text-success">${{ total_payments }}</span></h4>
+                </div>
+                
+                <div class="table-responsive">
+                    {{ employee_payments|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('filter').addEventListener('change', function() {
+            var filterOption = this.value;
+            var customDateRange = document.getElementById('custom-date-range');
+            if (filterOption === 'custom') {
+                customDateRange.style.display = 'block';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+            document.getElementById('filter-form').submit();
+        });
+
+        function checkAndSubmitForm() {
+            var startDate = document.getElementById('start_date').value;
+            var endDate = document.getElementById('end_date').value;
+            if (startDate && endDate) {
+                document.getElementById('filter').value = 'custom';
+                document.getElementById('filter-form').submit();
+            }
+        }
+
+        document.getElementById('start_date').addEventListener('change', checkAndSubmitForm);
+        document.getElementById('end_date').addEventListener('change', checkAndSubmitForm);
+    </script>
+</body>
+</html>

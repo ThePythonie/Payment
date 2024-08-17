@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6e2d3;
+            font-family: 'Courier New', monospace;
+            color: #2f2f2f;
+        }
+        .container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fdf6e3;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header {
+            border-bottom: 2px solid #4a4a4a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #4a4a4a;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #4a4a4a;
+        }
+        .btn-primary {
+            background-color: #d35400;
+            border-color: #d35400;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: #e67e22;
+            border-color: #e67e22;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-center">Add New Employee</h1>
+        </div>
+        
+        <form method="post" action="{{ url_for('add_employee') }}">
+            <div class="form-group">
+                <label for="employee_name">Employee Name:</label>
+                <input type="text" id="employee_name" name="employee_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="joining_date">Joining Date:</label>
+                <input type="date" id="joining_date" name="joining_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="payment_date">Payment Date:</label>
+                <input type="date" id="payment_date" name="payment_date" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Employee</button>
+        </form>
+
+        {% if error_message %}
+            <div class="alert alert-danger mt-3">
+                {{ error_message }}
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>
